@@ -1,0 +1,7 @@
+elastic-search:
+  enable: false
+  host: null
+  index: thelow-develop
+  step-secound: 20
+#  common-tag:
+#     - server-name: 1鯖
