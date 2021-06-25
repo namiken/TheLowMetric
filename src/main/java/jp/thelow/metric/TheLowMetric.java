@@ -14,14 +14,17 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import io.micrometer.core.instrument.Clock;
 import io.micrometer.core.instrument.Gauge;
+import io.micrometer.core.instrument.MeterRegistry;
 import io.micrometer.core.instrument.Metrics;
 import io.micrometer.core.instrument.Tag;
 import io.micrometer.core.instrument.binder.jvm.JvmGcMetrics;
 import io.micrometer.core.instrument.binder.jvm.JvmMemoryMetrics;
 import io.micrometer.core.instrument.binder.system.FileDescriptorMetrics;
 import io.micrometer.core.instrument.binder.system.ProcessorMetrics;
+import io.micrometer.core.instrument.simple.SimpleMeterRegistry;
 import io.micrometer.elastic.ElasticConfig;
 import io.micrometer.elastic.ElasticMeterRegistry;
+import lombok.Getter;
 
 public class TheLowMetric extends JavaPlugin implements Listener {
 
@@ -29,7 +32,8 @@ public class TheLowMetric extends JavaPlugin implements Listener {
 
   public static Logger logger;
 
-  private ElasticMeterRegistry registry;
+  @Getter
+  private static MeterRegistry registry;
 
   private JvmGcMetrics jvmGcMetrics = new JvmGcMetrics();
 
@@ -113,6 +117,8 @@ public class TheLowMetric extends JavaPlugin implements Listener {
       Gauge
           .builder("tps", () -> TpsGetter.getTPS())
           .register(registry);
+    } else {
+      registry = new SimpleMeterRegistry();
     }
 
   }
