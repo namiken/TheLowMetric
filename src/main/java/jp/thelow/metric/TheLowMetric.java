@@ -82,6 +82,11 @@ public class TheLowMetric extends JavaPlugin implements Listener {
           return section.getString("index");
         }
 
+        @Override
+        public String password() {
+          return section.getString("password");
+        }
+
       };
       registry = new ElasticMeterRegistry(elasticConfig, Clock.SYSTEM);
 
